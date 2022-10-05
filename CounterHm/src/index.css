@@ -91,3 +91,24 @@ code {
   background-color: lightgray;
 }
 
+.min{
+  border: 1px;
+  border-radius: 6px;
+  font-size: 18px;
+  background-color: #61dafb;
+  color: white;
+}
+.max{
+  border: 1px;
+  border-radius: 6px;
+  font-size: 18px;
+  background-color: #61dafb;
+  color: white;
+}
+.step{
+  border: 1px;
+  border-radius: 6px;
+  font-size: 18px;
+  background-color: #61dafb;
+  color: white;
+}

@@ -4,6 +4,8 @@ class Counter extends Component {
         super(props);
         this.state = {
             count: 0 ,
+            min: 0,
+            max: Infinity,
         };
 
         this.handleAdd = this.handleAdd.bind(this);
@@ -12,38 +14,67 @@ class Counter extends Component {
     }
     static getDerivedStateFromProps(props, state){
         if(props.reset){
-            return {
-
+             this.setState({
                 count: 0,
-            }
+                min: 0,
+                max: Infinity,
+            })
         }
         return null;
     }
-    // handleInputs(){
-    //     this.setState({
-    //         initial: prompt('put minimum value') || 0,
-    //         max: prompt('put max value') || 20,
-    //         step: prompt('put step') || 1,
-    //     })
-//}
+//         handleInputMax(){
+//             if(this.state.mintCount === undefined && this.state.maxCount === undefined){
+//             this.setState({
+//                 min:  0,
+//                 max:  <input/>,
+//                 step: 1,
+//             })
+//         }else{
+//                 this.setState({
+//                     min:  minCount,
+//                     max:  maxCount,
+//                     step: step,
+//                 })
+//             }
+//
+//
+// }
     componentDidUpdate(prevProps, prevState, snapshot){
 
-        if(this.state.count === -3 || this.state.count === 10){
+        if(this.state.count === this.state.min || this.state.count === this.state.max){
              this.props.setIsButtonClickable();
         }
 
     }
     handleAdd(){
         this.setState({
-            count: this.state.count+1
-           // count: this.state.count+this.state.step
+            count: this.state.count + 1
         })
     }
+        // if(this.state.step === undefined){
+        //     this.setState({
+        //         count: this.state.count + 1
+        //     })
+        // }else{
+        //     this.setState({
+        //         count: this.state.count + Number(this.state.step)
+        //     })
+        // }
+
+
     handleSub(){
-        this.setState({
-            count: this.state.count-1
-            //count: this.state.count-this.state.step
-        })
+    this.setState({
+        count: this.state.count - 1
+    })
+        // if(this.state.step === undefined){
+        //     this.setState({
+        //         count: this.state.count - 1
+        //     })
+        // }else{
+        //     this.setState({
+        //         count: this.state.count - Number(this.state.step)
+        //     })
+        // }
 
     }
 
@@ -59,8 +90,11 @@ class Counter extends Component {
                   <button disabled ={disabled} className={`button ${isButtonClickable ? 'disabled' : ''}`} onClick = {this.handleSub}>-</button>
                   <h1  className ={'counter'}>  {count}</h1>
                   <button  disabled={disabled} className={`button ${isButtonClickable ? 'disabled' : ''}`} onClick = {this.handleAdd}>+</button>
-
+                  <button className = "min"> min <input type = "text" /> </button>
+                  <button className = "max"> max <input type = "text" /> </button>
+                  <button className = "step"> step <input type = "text" /> </button>
               </div>
+
 
           </div>
         )
