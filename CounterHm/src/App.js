@@ -8,10 +8,11 @@ class App extends Component {
             reset: false,
             isButtonClickable: false,
         }
+
     }
     resetCounter = () => {
         this.setState({
-            reset: !this.state.reset
+            reset:  !this.state.reset,
         })
 
     }

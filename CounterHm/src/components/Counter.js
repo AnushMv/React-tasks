@@ -4,7 +4,7 @@ class Counter extends Component {
         super(props);
         this.state = {
             count: 0 ,
-            min: 0,
+            min: -Infinity,
             max: Infinity,
         };
 
@@ -13,12 +13,13 @@ class Counter extends Component {
         // this.handleInputs = this.handleInputs.bind(this);
     }
     static getDerivedStateFromProps(props, state){
+
         if(props.reset){
-             this.setState({
+             return {
                 count: 0,
-                min: 0,
-                max: Infinity,
-            })
+
+            }
+
         }
         return null;
     }
