@@ -1,104 +1,95 @@
-import {Component} from 'react';
+import { Component } from "react";
+
 class Counter extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+
         this.state = {
-            count: 0 ,
-            min: -Infinity,
-            max: Infinity,
+            count: 0,
+            minValue: -Infinity,
+            maxValue: Infinity,
         };
-
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleSub = this.handleSub.bind(this);
-        // this.handleInputs = this.handleInputs.bind(this);
+        this.step = 1;
     }
-    static getDerivedStateFromProps(props, state){
 
-        if(props.reset){
-             return {
-                count: 0,
-
-            }
-
+    decreaseCount = () => {
+        if (
+            this.state.count > this.state.minValue &&
+            this.state.count + this.step <= 50
+        ) {
+            this.setState({
+                count: this.state.count - this.step,
+            });
         }
-        return null;
-    }
-//         handleInputMax(){
-//             if(this.state.mintCount === undefined && this.state.maxCount === undefined){
-//             this.setState({
-//                 min:  0,
-//                 max:  <input/>,
-//                 step: 1,
-//             })
-//         }else{
-//                 this.setState({
-//                     min:  minCount,
-//                     max:  maxCount,
-//                     step: step,
-//                 })
-//             }
-//
-//
-// }
-    componentDidUpdate(prevProps, prevState, snapshot){
+    };
 
-        if(this.state.count === this.state.min || this.state.count === this.state.max){
-             this.props.setIsButtonClickable();
+    increaseCount = () => {
+        if (
+            this.state.count < this.state.maxValue &&
+            this.state.count - this.step >= -50
+        ) {
+            this.setState({
+                count: this.state.count + this.step,
+            });
         }
+    };
 
-    }
-    handleAdd(){
+    reset = () => {
         this.setState({
-            count: this.state.count + 1
-        })
-    }
-        // if(this.state.step === undefined){
-        //     this.setState({
-        //         count: this.state.count + 1
-        //     })
-        // }else{
-        //     this.setState({
-        //         count: this.state.count + Number(this.state.step)
-        //     })
-        // }
+            count: 0,
+        });
+    };
 
+    handleStep = (e) => {
+        if (e.target.value) {
+            this.step = +e.target.value;
+        } else {
+            this.step = 1;
+        }
+    };
 
-    handleSub(){
-    this.setState({
-        count: this.state.count - 1
-    })
-        // if(this.state.step === undefined){
-        //     this.setState({
-        //         count: this.state.count - 1
-        //     })
-        // }else{
-        //     this.setState({
-        //         count: this.state.count - Number(this.state.step)
-        //     })
-        // }
-
-    }
-
-    render(){
-        const {count} = this.state;
-        const {isButtonClickable} = this.props;
-        const disabled = isButtonClickable;
+    render() {
+        const { count } = this.state;
         return (
-          <div>
-              <h1 className = {'title'}>Counter</h1>
-              {/*<button className={'setValues'} onClick = {this.handleInputs}>Set Values</button>*/}
-              <div className={'container'}>
-                  <button disabled ={disabled} className={`button ${isButtonClickable ? 'disabled' : ''}`} onClick = {this.handleSub}>-</button>
-                  <h1  className ={'counter'}>  {count}</h1>
-                  <button  disabled={disabled} className={`button ${isButtonClickable ? 'disabled' : ''}`} onClick = {this.handleAdd}>+</button>
-                  <button className = "min"> min <input type = "text" /> </button>
-                  <button className = "max"> max <input type = "text" /> </button>
-                  <button className = "step"> step <input type = "text" /> </button>
-              </div>
-
-
-          </div>
-        )
+            <div>
+                <h1 className={"title"}>Counter</h1>
+                <div className={"container"}>
+                    <button
+                        disabled={this.state.count == this.state.minValue}
+                        onClick={this.decreaseCount}
+                    >
+                        -
+                    </button>
+                    <h1 className={"counter"}>{count} </h1>
+                    <button
+                        onClick={this.increaseCount}
+                        disabled={this.state.count == this.state.maxValue}
+                    >
+                        +
+                    </button>
+                    <button className="min">
+                        min{" "}
+                        <input
+                            type="text"
+                            onChange={(e) => this.setState({ minValue: e.target.value })}
+                        />
+                    </button>
+                    <button className="max">
+                        max{" "}
+                        <input
+                            type="text"
+                            onChange={(e) => this.setState({ maxValue: e.target.value })}
+                        />
+                    </button>
+                    <button className="step">
+                        step <input type="text" onChange={this.handleStep} />
+                    </button>
+                </div>
+                <button className="resetBtn" onClick={this.reset}>
+                    Reset
+                </button>
+            </div>
+        );
     }
 }
 
